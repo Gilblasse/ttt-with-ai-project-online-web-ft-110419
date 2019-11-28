@@ -1,7 +1,7 @@
 module Players
   class Human < Player
     
-    def move(token)
+    def move(board)
       input = gets.chomp
     end
     
