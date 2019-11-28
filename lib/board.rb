@@ -30,10 +30,20 @@ class Board
     cells.count {|cell| cell != " "}
   end
   
-  def taken?
-    
+  def taken?(input)
+    i = input.to_i - 1
+    @cells[i] != " "
   end
   
+  def valid_move?(input)
+    i = input.to_i - 1
+    !taken?(input) && i.between?(0,8)
+  end
+  
+  def update(input, token)
+    i = input.to_i - 1
+    @cells[i] = token.token
+  end
 end
 
 
