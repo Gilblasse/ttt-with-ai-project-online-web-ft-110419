@@ -16,7 +16,10 @@ class Game
   end
   
   def won?
-    
+    WIN_COMBINATIONS.each do |combo|
+      binding.pry
+      @board.cells[combo[0]] == @board.cells[combo[1]] && @board.cells[combo[1]] == @board.cells[combo[2]]
+    end
   end
   
   
