@@ -11,17 +11,40 @@ class Game
   end
   
   def current_player
-    count_tokens = @board.cells.count {|c| c != " " }
-    count_tokens % 2 == 0 ? @player_1 : @player_2
+    board.turn_count % 2 == 0 ? @player_1 : @player_2
   end
   
   def won?
-    WIN_COMBINATIONS.each do |combo|
-      binding.pry
-      @board.cells[combo[0]] == @board.cells[combo[1]] && @board.cells[combo[1]] == @board.cells[combo[2]]
-    end
+   won = WIN_COMBINATIONS.map do |combo|
+          return combo if board.cells[combo[0]] != " " && board.cells[combo[0]]  == board.cells[combo[1]] && board.cells[combo[1]] == board.cells[combo[2]]
+       end.compact.flatten
+    won if !won.empty?
   end
   
+  def draw?
+     !won? && board.full?
+  end
+  
+  def over?
+     won? || draw?
+  end
+  
+  def winner
+    board.cells[won?.first] if won?
+  end
+  
+  def turn 
+    input = current_player.move(board)
+    current_player.move(board) if !board.valid_move?(input) 
+    board.update(input, current_player)
+  end
+  
+  def play
+    turn until over?
+    board.update(player_1.move(board),player_1) if board.turn_count == 1
+    puts "Congratulations #{winner}!" if won?
+    puts "Cat's Game!" if draw?
+  end
   
 end
 

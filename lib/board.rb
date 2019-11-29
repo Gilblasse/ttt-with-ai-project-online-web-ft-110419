@@ -44,6 +44,7 @@ class Board
     i = input.to_i - 1
     @cells[i] = token.token
   end
+  
 end
 
 
